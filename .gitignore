@@ -30,134 +30,134 @@ doc/api/
 
 #app flowy ignore
 # Miscellaneous
-*.class
-*.lock
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
+lib/appflowy-board/*.class
+lib/appflowy-board/*.lock
+lib/appflowy-board/*.log
+lib/appflowy-board/*.pyc
+lib/appflowy-board/*.swp
+lib/appflowy-board/.DS_Store
+lib/appflowy-board/.atom/
+lib/appflowy-board/.buildlog/
+lib/appflowy-board/.history
+lib/appflowy-board/.svn/
 
 # IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
+lib/appflowy-board/*.iml
+lib/appflowy-board/*.ipr
+lib/appflowy-board/*.iws
+lib/appflowy-board/.idea/
 
 # Visual Studio Code related
-.classpath
-.project
-.settings/
-.vscode/
+lib/appflowy-board/.classpath
+lib/appflowy-board/.project
+lib/appflowy-board/.settings/
+lib/appflowy-board/.vscode/
 
 # Flutter repo-specific
-/bin/cache/
-/bin/internal/bootstrap.bat
-/bin/internal/bootstrap.sh
-/bin/mingit/
-/dev/benchmarks/mega_gallery/
-/dev/bots/.recipe_deps
-/dev/bots/android_tools/
-/dev/devicelab/ABresults*.json
-/dev/docs/doc/
-/dev/docs/flutter.docs.zip
-/dev/docs/lib/
-/dev/docs/pubspec.yaml
-/dev/integration_tests/**/xcuserdata
-/dev/integration_tests/**/Pods
-/packages/flutter/coverage/
-version
-analysis_benchmark.json
+lib/appflowy-board/bin/cache/
+lib/appflowy-board/bin/internal/bootstrap.bat
+lib/appflowy-board/bin/internal/bootstrap.sh
+lib/appflowy-board/bin/mingit/
+lib/appflowy-board/dev/benchmarks/mega_gallery/
+lib/appflowy-board/dev/bots/.recipe_deps
+lib/appflowy-board/dev/bots/android_tools/
+lib/appflowy-board/dev/devicelab/ABresults*.json
+lib/appflowy-board/dev/docs/doc/
+lib/appflowy-board/dev/docs/flutter.docs.zip
+lib/appflowy-board/dev/docs/lib/
+lib/appflowy-board/dev/docs/pubspec.yaml
+lib/appflowy-board/dev/integration_tests/**/xcuserdata
+lib/appflowy-board/dev/integration_tests/**/Pods
+lib/appflowy-board/packages/flutter/coverage/
+lib/appflowy-board/version
+lib/appflowy-board/analysis_benchmark.json
 
 # packages file containing multi-root paths
-.packages.generated
+lib/appflowy-board/.packages.generated
 
 # Flutter/Dart/Pub related
-**/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-**/generated_plugin_registrant.dart
-.packages
-.pub-cache/
-.pub/
-build/
-flutter_*.png
-linked_*.ds
-unlinked.ds
-unlinked_spec.ds
+lib/appflowy-board/**/doc/api/
+lib/appflowy-board/.dart_tool/
+lib/appflowy-board/.flutter-plugins
+lib/appflowy-board/.flutter-plugins-dependencies
+lib/appflowy-board/**/generated_plugin_registrant.dart
+lib/appflowy-board/.packages
+lib/appflowy-board/.pub-cache/
+lib/appflowy-board/.pub/
+lib/appflowy-board/build/
+lib/appflowy-board/flutter_*.png
+lib/appflowy-board/linked_*.ds
+lib/appflowy-board/unlinked.ds
+lib/appflowy-board/unlinked_spec.ds
 
 # Android related
-**/android/**/gradle-wrapper.jar
-.gradle/
-**/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
-**/android/local.properties
-**/android/**/GeneratedPluginRegistrant.java
-**/android/key.properties
-*.jks
+lib/appflowy-board/**/android/**/gradle-wrapper.jar
+lib/appflowy-board/.gradle/
+lib/appflowy-board/**/android/captures/
+lib/appflowy-board/**/android/gradlew
+lib/appflowy-board/**/android/gradlew.bat
+lib/appflowy-board/**/android/local.properties
+lib/appflowy-board/**/android/**/GeneratedPluginRegistrant.java
+lib/appflowy-board/**/android/key.properties
+lib/appflowy-board/*.jks
 
 # iOS/XCode related
-**/ios/**/*.mode1v3
-**/ios/**/*.mode2v3
-**/ios/**/*.moved-aside
-**/ios/**/*.pbxuser
-**/ios/**/*.perspectivev3
-**/ios/**/*sync/
-**/ios/**/.sconsign.dblite
-**/ios/**/.tags*
-**/ios/**/.vagrant/
-**/ios/**/DerivedData/
-**/ios/**/Icon?
-**/ios/**/Pods/
-**/ios/**/.symlinks/
-**/ios/**/profile
-**/ios/**/xcuserdata
-**/ios/.generated/
-**/ios/Flutter/.last_build_id
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Flutter.podspec
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/ephemeral
-**/ios/Flutter/app.flx
-**/ios/Flutter/app.zip
-**/ios/Flutter/flutter_assets/
-**/ios/Flutter/flutter_export_environment.sh
-**/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
+lib/appflowy-board/**/ios/**/*.mode1v3
+lib/appflowy-board/**/ios/**/*.mode2v3
+lib/appflowy-board/**/ios/**/*.moved-aside
+lib/appflowy-board/**/ios/**/*.pbxuser
+lib/appflowy-board/**/ios/**/*.perspectivev3
+lib/appflowy-board/**/ios/**/*sync/
+lib/appflowy-board/**/ios/**/.sconsign.dblite
+lib/appflowy-board/**/ios/**/.tags*
+lib/appflowy-board/**/ios/**/.vagrant/
+lib/appflowy-board/**/ios/**/DerivedData/
+lib/appflowy-board/**/ios/**/Icon?
+lib/appflowy-board/**/ios/**/Pods/
+lib/appflowy-board/**/ios/**/.symlinks/
+lib/appflowy-board/**/ios/**/profile
+lib/appflowy-board/**/ios/**/xcuserdata
+lib/appflowy-board/**/ios/.generated/
+lib/appflowy-board/**/ios/Flutter/.last_build_id
+lib/appflowy-board/**/ios/Flutter/App.framework
+lib/appflowy-board/**/ios/Flutter/Flutter.framework
+lib/appflowy-board/**/ios/Flutter/Flutter.podspec
+lib/appflowy-board/**/ios/Flutter/Generated.xcconfig
+lib/appflowy-board/**/ios/Flutter/ephemeral
+lib/appflowy-board/**/ios/Flutter/app.flx
+lib/appflowy-board/**/ios/Flutter/app.zip
+lib/appflowy-board/**/ios/Flutter/flutter_assets/
+lib/appflowy-board/**/ios/Flutter/flutter_export_environment.sh
+lib/appflowy-board/**/ios/ServiceDefinitions.json
+lib/appflowy-board/**/ios/Runner/GeneratedPluginRegistrant.*
 
 # macOS
-**/Flutter/ephemeral/
-**/Pods/
-**/macos/Flutter/GeneratedPluginRegistrant.swift
-**/macos/Flutter/ephemeral
-**/xcuserdata/
+lib/appflowy-board/**/Flutter/ephemeral/
+lib/appflowy-board/**/Pods/
+lib/appflowy-board/**/macos/Flutter/GeneratedPluginRegistrant.swift
+lib/appflowy-board/**/macos/Flutter/ephemeral
+lib/appflowy-board/**/xcuserdata/
 
 # Windows
-**/windows/flutter/generated_plugin_registrant.cc
-**/windows/flutter/generated_plugin_registrant.h
-**/windows/flutter/generated_plugins.cmake
+lib/appflowy-board/**/windows/flutter/generated_plugin_registrant.cc
+lib/appflowy-board/**/windows/flutter/generated_plugin_registrant.h
+lib/appflowy-board/**/windows/flutter/generated_plugins.cmake
 
 # Linux
-**/linux/flutter/generated_plugin_registrant.cc
-**/linux/flutter/generated_plugin_registrant.h
-**/linux/flutter/generated_plugins.cmake
+lib/appflowy-board/**/linux/flutter/generated_plugin_registrant.cc
+lib/appflowy-board/**/linux/flutter/generated_plugin_registrant.h
+lib/appflowy-board/**/linux/flutter/generated_plugins.cmake
 
 # Coverage
-coverage/
+lib/appflowy-board/coverage/
 
 # Symbols
-app.*.symbols
+lib/appflowy-board/app.*.symbols
 
 # Exceptions to above rules.
-!**/ios/**/default.mode1v3
-!**/ios/**/default.mode2v3
-!**/ios/**/default.pbxuser
-!**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-!/dev/ci/**/Gemfile.lock
+lib/appflowy-board/!**/ios/**/default.mode1v3
+lib/appflowy-board/!**/ios/**/default.mode2v3
+lib/appflowy-board/!**/ios/**/default.pbxuser
+lib/appflowy-board/!**/ios/**/default.perspectivev3
+lib/appflowy-board/!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+lib/appflowy-board/!/dev/ci/**/Gemfile.lock
