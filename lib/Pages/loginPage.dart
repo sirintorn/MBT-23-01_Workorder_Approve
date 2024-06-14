@@ -11,8 +11,9 @@ import 'package:web_project1/Project_screen/project1_screen.dart';
 import 'package:web_project1/Provider/colore_provider.dart';
 import 'package:web_project1/Provider/userlogin.dart';
 import 'package:web_project1/ServerAndConfig/config.dart';
+import 'package:web_project1/splase_screen.dart';
 
-import '../../Provider/colore_provider.dart';
+import '../Provider/colore_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
          var dio = Dio();
     var response = await dio.request(
-      '${Configuration.apiServer}/${usernameController.text}/${passwordController.text}',
+      '${Configuration.apiServer}getStakeholder/${usernameController.text}/${passwordController.text}',
       options: Options(
         method: 'GET',
       ),
@@ -104,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
       loginProvider.setUser(response.data);
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => Projct()),
+          MaterialPageRoute(builder: (context) => Splase_Screen()),
           (Route<dynamic> route) => false);
     } else {
       print(response.statusMessage);
@@ -199,6 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                                       height: 30,
                                     ),
                                     TextField(
+                                      controller: usernameController,
                                       style:
                                           TextStyle(color: notifire.textcolore),
                                       decoration: InputDecoration(
@@ -232,39 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                                       height: 30,
                                     ),
                                     TextField(
-                                      style:
-                                          TextStyle(color: notifire.textcolore),
-                                      decoration: InputDecoration(
-                                        //contentPadding: const EdgeInsets.only(left: 20,right: 20),
-                                        border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: BorderSide(
-                                                color: Colors.grey
-                                                    .withOpacity(0.4))),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: BorderSide(
-                                                color: Colors.grey
-                                                    .withOpacity(0.4))),
-                                        hintText: 'Email ID',
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Image(
-                                              image: const AssetImage(
-                                                  'assets/envelope.png'),
-                                              color: notifire.textcolore),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    TextField(
+                                      controller: passwordController,
                                       style:
                                           TextStyle(color: notifire.textcolore),
                                       obscureText: true,
@@ -315,14 +285,9 @@ class _LoginPageState extends State<LoginPage> {
                                                     BorderRadius.circular(30)),
                                           ),
                                           onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const Sign_up_screen(),
-                                                ));
+                                            tryLogin();
                                           },
-                                          child: const Text('Create Account'),
+                                          child: const Text('Login'),
                                         ),
                                       ),
                                     ),
@@ -337,132 +302,6 @@ class _LoginPageState extends State<LoginPage> {
                                     // ),
                                     const SizedBox(
                                       height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                            child: SizedBox(
-                                                width: 100,
-                                                child: Divider(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.4),
-                                                ))),
-                                        Text('OR',
-                                            style: TextStyle(
-                                                color: notifire.textcolore)),
-                                        Expanded(
-                                            child: SizedBox(
-                                                width: 100,
-                                                child: Divider(
-                                                  color: Colors.grey
-                                                      .withOpacity(0.4),
-                                                ))),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            height: 50,
-                                            width: Get.width,
-                                            decoration: BoxDecoration(
-                                              // color: Color(0xffF1F2F5),
-                                              // color: Colors.grey.withOpacity(0.2),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    notifire.authbuttoncolore,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)),
-                                              ),
-                                              onPressed: () {},
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Image(
-                                                    image: AssetImage(
-                                                        'assets/google.png'),
-                                                    height: 20,
-                                                    width: 20,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    'Google',
-                                                    style: TextStyle(
-                                                        color: notifire
-                                                            .textcolore),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: Container(
-                                            height: 50,
-                                            width: Get.width,
-                                            decoration: BoxDecoration(
-                                              // color: Color(0xffF1F2F5),
-                                              // color: Colors.grey.withOpacity(0.2),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    notifire.authbuttoncolore,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0)),
-                                              ),
-                                              onPressed: () {},
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Image(
-                                                    image: AssetImage(
-                                                        'assets/facebook.png'),
-                                                    height: 20,
-                                                    width: 20,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    'Facebook',
-                                                    style: TextStyle(
-                                                        color: notifire
-                                                            .textcolore),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                      ],
                                     ),
                                   ],
                                 ),

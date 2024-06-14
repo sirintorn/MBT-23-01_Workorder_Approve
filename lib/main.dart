@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/root/internacionalization.dart';
 import 'package:provider/provider.dart';
-import 'package:web_project1/Auth_Screen/Pages/loginPage.dart';
+import 'package:web_project1/Pages/loginPage.dart';
 import 'package:web_project1/Auth_Screen/login_screen.dart';
 import 'package:web_project1/Provider/userlogin.dart';
 import 'package:web_project1/splase_screen.dart';
@@ -36,6 +36,9 @@ class _MyAppState extends State<MyApp> {
 
   void loadUser()async{
      user = await loginProvider.getUser();
+     setState(() {
+       
+     });
   }
 
   @override

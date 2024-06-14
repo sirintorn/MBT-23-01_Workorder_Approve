@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:web_project1/Pages/loginPage.dart';
+import 'package:web_project1/Provider/userlogin.dart';
 
 import '../Provider/colore_provider.dart';
 import '../common_button/get_code.dart';
@@ -60,6 +62,32 @@ class _appberState extends State<appber> {
   ];
 
   bool rtl = false;
+
+  dynamic user;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async{
+    var loginProvider = UserLoginProvider();
+    user = await loginProvider.getUser();
+    setState(() {
+      
+    });
+  }
+
+  void logOut()async {
+    var loginProvider = UserLoginProvider();
+    loginProvider.logoutUser();
+         Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LoginPage()),
+          (Route<dynamic> route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -917,12 +945,12 @@ class _appberState extends State<appber> {
               color: notifire.containcolore1,
               child:  widget.size<700? const Padding(
                 padding: EdgeInsets.only(right: 10),
-                child: CircleAvatar(backgroundImage: AssetImage('assets/harshimage.png'),radius: 12),
+                child: CircleAvatar(backgroundImage: AssetImage('assets/32.png'),radius: 12),
               ): Row(
                 children: [
-                  const CircleAvatar(backgroundImage: AssetImage('assets/harshimage.png'),radius: 12),
+                  const CircleAvatar(backgroundImage: AssetImage('assets/32.png'),radius: 12),
                   const SizedBox(width: 10,),
-                  Text('Admin SystemAdmin',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: notifire.textcolore),),
+                  Text('${user['username']}',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: notifire.textcolore),),
                   Icon(Icons.arrow_drop_down,size: 15,color: notifire.textcolore,),
                   const SizedBox(width: 10,),
                 ],
@@ -937,12 +965,12 @@ class _appberState extends State<appber> {
                     enabled: false,
                     value: SampleItem.itemTwo,
                     child: ListTile(
-                      leading: const CircleAvatar(backgroundImage: AssetImage('assets/harshimage.png'),radius: 25),
-                      title: Text('Admin SystemAdmin',style: TextStyle(fontSize: 15,color: notifire.textcolore,fontWeight: FontWeight.bold)),
+                      leading: const CircleAvatar(backgroundImage: AssetImage('assets/32.png'),radius: 25),
+                      title: Text('${user['username']}',style: TextStyle(fontSize: 15,color: notifire.textcolore,fontWeight: FontWeight.bold)),
                       subtitle: const Text('Administrator',style: TextStyle(fontSize: 10,color: Colors.grey)),
                     )
                 ),
-                PopupMenuItem<SampleItem>(
+                /*PopupMenuItem<SampleItem>(
                   padding: const EdgeInsets.all(8),
                   enabled: false,
                   value: SampleItem.itemOne,
@@ -953,18 +981,15 @@ class _appberState extends State<appber> {
                       Text('Profile',style: TextStyle(color: notifire.textcolore),)
                     ],
                   ),
-                ),
+                ),*/
                 PopupMenuItem<SampleItem>(
                   padding: const EdgeInsets.all(8),
                   enabled: false,
                   value: SampleItem.itemTwo,
-                  child:  Row(
-                    children: [
-                      Image(image: const AssetImage('assets/33.png'),color: notifire.textcolore),
-                      const SizedBox(width: 15,),
-                      Text('Setting',style: TextStyle(color: notifire.textcolore))
-                    ],
-                  ),
+                  child:  ListTile(
+                        title: Text('Logout',style: TextStyle(color: notifire.textcolore)),
+                        onTap: logOut,
+                      ),
                 ),
                 //   PopupMenuItem<SampleItem>(
                 //     padding: const EdgeInsets.all(8),
