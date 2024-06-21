@@ -304,6 +304,7 @@ class _laoutState extends State<laout> {
   Widget widgetWaiting(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
+    if(length == 0)length = 1;
     for(var item in workOrders){
       if(item['status'] == 1) count++;
     }
@@ -351,6 +352,7 @@ class _laoutState extends State<laout> {
   Widget widgetApproved(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
+    if(length == 0)length = 1;
     for(var item in workOrders){
       if(item['status'] == 2) count++;
     }
@@ -398,6 +400,7 @@ class _laoutState extends State<laout> {
   Widget widgetInProgress(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
+    if(length == 0)length = 1;
     for(var item in workOrders){
       if(item['status'] == 3 || item['status'] == 4 || item['status'] == 5) count++;
     }
@@ -446,6 +449,7 @@ class _laoutState extends State<laout> {
   Widget widgetFinish(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
+    if(length == 0)length = 1;
     for(var item in workOrders){
       if(item['status'] == 6 || item['status'] == 7) count++;
     }
