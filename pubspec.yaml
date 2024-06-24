@@ -65,6 +65,7 @@ dependencies:
   dio: ^5.4.3+1
   appflowy_board:
     path: ./lib/appflowy-board
+  flutter_spinkit: ^5.2.1
 
 
 

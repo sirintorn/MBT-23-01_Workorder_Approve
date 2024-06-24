@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:web_project1/Provider/apiservice.dart';
 import '../Provider/colore_provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 enum SampleItem { itemOne, itemTwo, itemThree }
 
@@ -54,180 +55,37 @@ class _laoutState extends State<laout> {
 
   void loadData() async {
     machines = await APIService.getAllMachines();
-    for(var item in machines){
+    for (var item in machines) {
       var workOrders = await APIService.getMachineWorkOrder(item['id']);
       workOrderList.add(workOrders);
     }
+    print(machines);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
-    return DefaultTabController(
-      length: 3,
-      initialIndex: 1,
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: notifire.bgcolore,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth < 600) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    // SizedBox(height: 20,),
-                    mainrow(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    secoundcontain(size: constraints.maxWidth),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    thirdcontain(size: constraints.maxWidth),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    fourcontain(size: constraints.maxWidth),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                        // height: 450,
-                        child: fivecontain(size: constraints.maxWidth)),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                        // height: 450,
-                        child: sixcontain(size: constraints.maxWidth)),
-                    /*const SizedBox(
-                      height: 120,
-                    ),*/
-                  ],
-                ),
-              );
-            } else if (constraints.maxWidth < 1000) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(child: mainrow()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: secoundcontain(size: constraints.maxWidth))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: thirdcontain(size: constraints.maxWidth))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: fourcontain(size: constraints.maxWidth))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: fivecontain(size: constraints.maxWidth)),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(child: sixcontain(size: constraints.maxWidth)),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            } else {
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(child: mainrow()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        // Expanded(child: box()),
-                        // Expanded(child: box2()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        // Expanded(child: box3()),
-                        // Expanded(child: box4()),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: secoundcontain(size: constraints.maxWidth))
-                      ],
-                    ),
-                    // const SizedBox(height: 20,),
-                    // Row(
-                    //   children: [
-                    //     Expanded(child: thirdcontain(size: constraints.maxWidth))
-                    //   ],
-                    // ),
-                    // const SizedBox(height: 20,),
-                    // Row(
-                    //   children: [
-                    //     Expanded(child: fourcontain(size: constraints.maxWidth))
-                    //   ],
-                    // ),
-                    // const SizedBox(height: 20,),
-                    // Row(
-                    //    children: [
-                    //      Expanded(child: fivecontain(size: constraints.maxWidth)),
-                    //      Expanded(child: sixcontain(size: constraints.maxWidth)),
-                    //    ],
-                    //  )
-                  ],
-                ),
-              );
-            }
-          },
-        ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [
+          // SizedBox(height: 20,),
+          mainrow(),
+          const SizedBox(
+            height: 20,
+          ),
+          if (workOrderList.isEmpty == false)
+            secoundcontain(size: MediaQuery.sizeOf(context).width),
+          if (workOrderList.isEmpty == true)
+            const SpinKitRotatingCircle(
+              color: Colors.blue,
+              size: 50.0,
+            ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
       ),
     );
   }
@@ -236,77 +94,12 @@ class _laoutState extends State<laout> {
   List checkBox = [];
   int boxBorder = 0;
 
-  // Widget somecontain1({required String img,required String txt1,required String txt2,required String txt3,required String txt4,required Color containercolore,required Color iconcolore,required Color txtcolore,required index}) {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 10,right: 20,),
-  //     child: InkWell(
-  //       onTap: (){
-  //         setState(() {
-  //           boxBorder = index;
-  //         });
-  //       },
-  //       onHover: (val){
-  //         setState(() {
-  //           if (val == false) {
-  //             isHover.remove(index);
-  //           } else {
-  //             isHover.add(index);
-  //           }
-  //         });
-  //       },
-  //       child: AnimatedContainer(
-  //           duration: const Duration(microseconds: 200),
-  //           height: 130,
-  //           // width: 570,
-  //           decoration: BoxDecoration(
-  //               // color: Color(0xffEBF0FE),
-  //               boxShadow:  [
-  //                 BoxShadow(color: isHover.contains(index) ? Colors.blueAccent : Colors.transparent,offset: const Offset(0,5),blurRadius: 2,spreadRadius: -2,),
-  //               ],
-  //               color: notifire.containcolore1,
-  //               borderRadius: BorderRadius.circular(10)),
-  //           child: Padding(
-  //             padding: const EdgeInsets.only(top: 20,left: 30,right: 30),
-  //             child: Column(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 // const SizedBox(height: 10,),
-  //                 Row(
-  //                   children: [
-  //                     Text(txt1,style: TextStyle(color: notifire.textcolore)),
-  //                     const SizedBox(width: 5,),
-  //                     Icon(Icons.info,color: notifire.textcolore,size: 15,),
-  //                   ],
-  //                 ),
-  //                 Row(
-  //                   children: [
-  //                     Text(txt2,style: TextStyle(fontSize: 30,color: notifire.textcolore),),
-  //                     const Spacer(),
-  //                     CircleAvatar(backgroundColor: containercolore,child: Image(image: AssetImage(img),color: Colors.black),),
-  //                   ],
-  //                 ),
-  //                 Row(
-  //                   children: [
-  //                     Image(image: const AssetImage('assets/arrow-up.png'),color: iconcolore,height: 15,width: 15,),
-  //                     Text(txt3,style: TextStyle(color: txtcolore),),
-  //                     const SizedBox(width: 5,),
-  //                     Text(txt4,style: TextStyle(color: notifire.textcolore),)
-  //                   ],
-  //                 )
-  //               ],
-  //             ),
-  //           )),
-  //     ),
-  //   );
-  // }
-
   Widget widgetWaiting(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
-    if(length == 0)length = 1;
-    for(var item in workOrders){
-      if(item['status'] == 1) count++;
+    if (length == 0) length = 1;
+    for (var item in workOrders) {
+      if (item['status'] == 1) count++;
     }
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 20),
@@ -334,13 +127,13 @@ class _laoutState extends State<laout> {
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.grey.withOpacity(0.4),
                       color: const Color(0xff6949FF),
-                      value: count/length,
+                      value: count / length,
                     ),
                   ),
                   trailing: Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child:
-                        Text(count.toString(), style: const TextStyle(color: Color(0xff6949FF))),
+                    child: Text(count.toString(),
+                        style: const TextStyle(color: Color(0xff6949FF))),
                   ),
                 )
               ],
@@ -352,9 +145,9 @@ class _laoutState extends State<laout> {
   Widget widgetApproved(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
-    if(length == 0)length = 1;
-    for(var item in workOrders){
-      if(item['status'] == 2) count++;
+    if (length == 0) length = 1;
+    for (var item in workOrders) {
+      if (item['status'] == 2) count++;
     }
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 20),
@@ -382,13 +175,13 @@ class _laoutState extends State<laout> {
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.grey.withOpacity(0.4),
                       color: const Color(0xff6949FF),
-                      value: count/length,
+                      value: count / length,
                     ),
                   ),
                   trailing: Padding(
                     padding: EdgeInsets.only(top: 30),
-                    child:
-                        Text(count.toString(), style: TextStyle(color: Color(0xff6949FF))),
+                    child: Text(count.toString(),
+                        style: TextStyle(color: Color(0xff6949FF))),
                   ),
                 )
               ],
@@ -400,9 +193,10 @@ class _laoutState extends State<laout> {
   Widget widgetInProgress(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
-    if(length == 0)length = 1;
-    for(var item in workOrders){
-      if(item['status'] == 3 || item['status'] == 4 || item['status'] == 5) count++;
+    if (length == 0) length = 1;
+    for (var item in workOrders) {
+      if (item['status'] == 3 || item['status'] == 4 || item['status'] == 5)
+        count++;
     }
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 20),
@@ -431,13 +225,13 @@ class _laoutState extends State<laout> {
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.grey.withOpacity(0.4),
                       color: const Color(0xff6949FF),
-                      value: count/length,
+                      value: count / length,
                     ),
                   ),
                   trailing: Padding(
                     padding: EdgeInsets.only(top: 30),
-                    child:
-                        Text(count.toString(), style: TextStyle(color: Color(0xff6949FF))),
+                    child: Text(count.toString(),
+                        style: TextStyle(color: Color(0xff6949FF))),
                   ),
                 )
               ],
@@ -449,9 +243,9 @@ class _laoutState extends State<laout> {
   Widget widgetFinish(List<dynamic> workOrders) {
     late int count = 0;
     late int length = workOrders.length;
-    if(length == 0)length = 1;
-    for(var item in workOrders){
-      if(item['status'] == 6 || item['status'] == 7) count++;
+    if (length == 0) length = 1;
+    for (var item in workOrders) {
+      if (item['status'] == 6 || item['status'] == 7) count++;
     }
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 20),
@@ -480,13 +274,13 @@ class _laoutState extends State<laout> {
                     child: LinearProgressIndicator(
                       backgroundColor: Colors.grey.withOpacity(0.4),
                       color: const Color(0xff6949FF),
-                      value: count/length,
+                      value: count / length,
                     ),
                   ),
                   trailing: Padding(
                     padding: EdgeInsets.only(top: 30),
-                    child:
-                        Text(count.toString(), style: TextStyle(color: Color(0xff6949FF))),
+                    child: Text(count.toString(),
+                        style: TextStyle(color: Color(0xff6949FF))),
                   ),
                 )
               ],
@@ -2149,7 +1943,7 @@ class _laoutState extends State<laout> {
     ]);
   }
 
-  TableRow _rowData(dynamic machine, List<dynamic> workOrders){
+  TableRow _rowData(dynamic machine, List<dynamic> workOrders) {
     return TableRow(children: [
       Expanded(flex: 3, child: widgetWaiting(workOrders)),
       Expanded(flex: 3, child: widgetApproved(workOrders)),
