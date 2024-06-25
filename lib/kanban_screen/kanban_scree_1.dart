@@ -116,7 +116,6 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
   void loadKanban() async {
     try {
       user = await UserLoginProvider().getUser();
-      debugPrint(user['id'].toString());
       machines = await APIService.getAllMachines();
 
       var g1 = <AppFlowyGroupItem>[];
@@ -156,6 +155,10 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
       group4 =
           AppFlowyGroupData(id: "finished", name: "Finished", items: g67);
 
+      controller.clear();
+      controller2.clear();
+      controller3.clear();
+
       controller.addGroup(group1);
       controller.addGroup(group2);
       controller2.addGroup(group3);
@@ -182,6 +185,15 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
         onLogicalChange(fromGroupId, fromIndex, toGroupId, toIndex);
       },
     );
+    reloadEverySecond(10);
+  }
+
+  void reloadEverySecond(int s) {
+    Future.delayed(Duration(seconds: s), () {
+      print('reloaded at ${DateTime.now().toString()}');
+      loadKanban();
+      reloadEverySecond(s);
+    });
   }
 
   @override
