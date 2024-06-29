@@ -24,16 +24,32 @@ class APIService {
   static Future<dynamic> addMachine(
       String name, String ipAddress, int modifiedBy) async {
     var headers = {'Content-Type': 'application/json'};
-    var data =
-        json.encode({"name": name, "ipAddress": ipAddress, "modifyBy": modifiedBy});
+    var data = json
+        .encode({"name": name, "ipAddress": ipAddress, "modifyBy": modifiedBy});
     var dio = Dio();
     var response = await dio.request(
-      '${Configuration.apiServer}addMachine',
+      '${Configuration.apiServer}postMachine',
       options: Options(
         method: 'POST',
         headers: headers,
       ),
       data: data,
+    );
+
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return (response.statusMessage);
+    }
+  }
+
+  static Future<dynamic> deleteWorkOrder(id) async {
+    var dio = Dio();
+    var response = await dio.request(
+      '${Configuration.apiServer}delWorkOrder/${id.toString()}',
+      options: Options(
+        method: 'DELETE',
+      ),
     );
 
     if (response.statusCode == 200) {

@@ -21,19 +21,11 @@ class kanban_screen_1 extends StatefulWidget {
 
 class _kanban_screen_1State extends State<kanban_screen_1> {
   var group1 = AppFlowyGroupData(id: "waiting", name: "Waiting", items: []);
-  var group2 = AppFlowyGroupData(
-    id: "approved",
-    name: "Approved",
-    items: []
-  );
+  var group2 = AppFlowyGroupData(id: "approved", name: "Approved", items: []);
   var group3 = AppFlowyGroupData(
-      id: "inProgress",
-      name: "In Progress",
-      items: <AppFlowyGroupItem>[]);
+      id: "inProgress", name: "In Progress", items: <AppFlowyGroupItem>[]);
   var group4 = AppFlowyGroupData(
-      id: "finished",
-      name: "Finished",
-      items: <AppFlowyGroupItem>[]);
+      id: "finished", name: "Finished", items: <AppFlowyGroupItem>[]);
 
   AppFlowyBoardController controller = AppFlowyBoardController(
     onMoveGroup: (fromGroupId, fromIndex, toGroupId, toIndex) {
@@ -57,6 +49,8 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
   late List<dynamic> machines;
 
   late dynamic user;
+
+  bool reloading = false;
 
   AppFlowyGroupItem generateCard(dynamic item) {
     int mId = item['machineId'];
@@ -152,8 +146,7 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
       );
       group3 =
           AppFlowyGroupData(id: "inProgress", name: "In Progress", items: g345);
-      group4 =
-          AppFlowyGroupData(id: "finished", name: "Finished", items: g67);
+      group4 = AppFlowyGroupData(id: "finished", name: "Finished", items: g67);
 
       controller.clear();
       controller2.clear();
@@ -362,9 +355,47 @@ class _RichTextCardState extends State<RichTextCard> {
               style: const TextStyle(fontSize: 12, color: Colors.black),
             ),
             TextButton(onPressed: () {}, child: Text('View info')),
-            TextButton(onPressed: () {}, child: Text('Delete'))
+            TextButton(
+                onPressed: () async {
+                  alertDeleteCard(widget.item.codeCoil);
+                },
+                child: Text('Delete'))
           ],
         ),
+      ),
+    );
+  }
+
+  void alertDeleteCard(String codeCoil) async {
+    bool reloading = false;
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('DELETE WARNING'),
+        content: const Text('Are you sure about deleting this item?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          if (reloading == false)
+            TextButton(
+              onPressed: () async {
+                reloading = true;
+                await APIService.deleteWorkOrder(widget.item.codeCoil);
+                reloading = false;
+                setState((){
+                    Navigator.pop(context, 'Confirm');
+                });
+              },
+              child: const Text('Confirm'),
+            ),
+          if (reloading == true)
+            TextButton(
+              onPressed: () {},
+              child: const Text('Deleting...'),
+            ),
+        ],
       ),
     );
   }
