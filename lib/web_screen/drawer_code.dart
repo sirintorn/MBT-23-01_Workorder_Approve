@@ -28,8 +28,8 @@ class mypages{
 
 class Drawer1 extends StatefulWidget {
   final double size;
-  const Drawer1({super.key, required this.size});
-
+  final String version ;
+  const Drawer1({super.key, required this.size, required this.version});
   @override
   State<Drawer1> createState() => _Drawer1State();
 }
@@ -160,7 +160,7 @@ class _Drawer1State extends State<Drawer1> {
                               onTap: () {
                                 inboxController.setTextIsTrue(0);
                               },
-                              child: Text('Workorder \nManagement', style: TextStyle(fontFamily: 'Jost-SemiBold', fontSize: 20,color: notifire.textcolore, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis)),
+                              child: Text('Workorder \nManagement \n' +widget.version, style: TextStyle(fontFamily: 'Jost-SemiBold', fontSize: 20,color: notifire.textcolore, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis)),
                         ],
                       ),
                       // Column(

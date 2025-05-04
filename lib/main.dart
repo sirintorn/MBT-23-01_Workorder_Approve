@@ -11,6 +11,7 @@ import 'package:web_project1/splase_screen.dart';
 
 import 'Provider/colore_provider.dart';
 import 'common_button/scrool_screen.dart';
+import 'ServerAndConfig/config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context){
+    String version = Configuration.version;
     if (user == null) {
       return MultiProvider(
         providers: [
@@ -53,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         child: GetMaterialApp(
             locale: const Locale('en', 'US'),
             translations: AppTranslations(),
-            title: "MBT Workorder Approve",
+            title: "MBT Workorder Approve "+version,
             scrollBehavior: MyCustomScrollBehavior(),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -77,7 +79,7 @@ class _MyAppState extends State<MyApp> {
         child: GetMaterialApp(
             locale: const Locale('en', 'US'),
             translations: AppTranslations(),
-            title: "MBT Workorder Approve",
+            title: "MBT Workorder Approve "+version,
             scrollBehavior: MyCustomScrollBehavior(),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

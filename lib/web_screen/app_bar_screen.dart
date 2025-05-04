@@ -636,149 +636,149 @@ class _appberState extends State<appber> {
             // ),
 
             const SizedBox(width: 15,),
-            PopupMenuButton<SampleItem>(
-              tooltip: '',
-              offset: const Offset(0, 50),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              initialValue: selectedMenu,
-              constraints: const BoxConstraints(
-                maxWidth: 350,
-                maxHeight: 430,
-              ),
-              color: notifire.containcolore1,
-              child:  Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3),
-                    child: Image(image: const AssetImage('assets/bellqw.png'),height: 25,width: 30,color: notifire.textcolore),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Container(
-                      height: 14,
-                      width: 14,
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(65)
-                      ),
-                      child: const Center(child: Text('1',style: TextStyle(fontSize: 8),)),
-                    ),
-                  ),
-                ],
-              ),
-              onSelected: (SampleItem item) {
-                setState(() {
-                  selectedMenu = item;
-                });
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
-                PopupMenuItem<SampleItem>(
-                  enabled: false,
-                  value: SampleItem.itemOne,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('Notification',style: TextStyle(color: notifire.textcolore),),
-                          const Spacer(),
-                          Container(
-                            height: 30,
-                            width: 80,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(25)
-                            ),
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff5D87FF),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),),
-                              child:  const Text('5 new',style: TextStyle(color: Colors.white)),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem<SampleItem>(
-                  enabled: false,
-                  value: SampleItem.itemOne,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-3 1.png')),
-                        title: Text('Roman joined the Team!',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                        subtitle: Text("Congratulate him",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem<SampleItem>(
-                  enabled: false,
-                  value: SampleItem.itemOne,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-1 1.png')),
-                        title: Text('New message recevied',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                        subtitle: Text("Salma sent you new message",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem<SampleItem>(
-                  enabled: false,
-                  value: SampleItem.itemOne,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-8 1.png')),
-                        title: Text('New payment recevied',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                        subtitle: Text("Check your earning",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem<SampleItem>(
-                  enabled: false,
-                  value: SampleItem.itemOne,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        contentPadding: const EdgeInsets.all(0),
-                        leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-2 1q.png')),
-                        title: Text('Jolly completed tasks',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                        subtitle: Text("Assign her new tasks",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
-                      )
-                    ],
-                  ),
-                ),
-                PopupMenuItem<SampleItem>(
-                  padding: const EdgeInsets.all(0),
-                  enabled: false,
-                  value: SampleItem.itemOne,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding:  const EdgeInsets.only(left: 10,right: 10),
-                        child: SizedBox(
-                            height: 40,
-                            width: 400,
-                            child: OutlinedButton(onPressed: () {},
-                              style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
-                                side: MaterialStateProperty.all(const BorderSide(
-                                  color: Color(0xff5D87FF),
-                                )),
-                              ), child: const Text('See all Notification',style: TextStyle(color: Color(0xff5D87FF))),)
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            // PopupMenuButton<SampleItem>(
+            //   tooltip: '',
+            //   offset: const Offset(0, 50),
+            //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            //   initialValue: selectedMenu,
+            //   constraints: const BoxConstraints(
+            //     maxWidth: 350,
+            //     maxHeight: 430,
+            //   ),
+            //   //color: notifire.containcolore1,
+            //   // child:  Stack(
+            //   //   children: [
+            //   //     // Padding(
+            //   //     //   padding: const EdgeInsets.only(top: 3),
+            //   //     //   child: Image(image: const AssetImage('assets/bellqw.png'),height: 25,width: 30,color: notifire.textcolore),
+            //   //     // ),
+            //   //     Padding(
+            //   //       padding: const EdgeInsets.only(left: 15),
+            //   //       child: Container(
+            //   //         height: 14,
+            //   //         width: 14,
+            //   //         decoration: BoxDecoration(
+            //   //             color: Colors.red,
+            //   //             borderRadius: BorderRadius.circular(65)
+            //   //         ),
+            //   //         child: const Center(child: Text('1',style: TextStyle(fontSize: 8),)),
+            //   //       ),
+            //   //     ),
+            //   //   ],
+            //   // ),
+            //   onSelected: (SampleItem item) {
+            //     setState(() {
+            //       selectedMenu = item;
+            //     });
+            //   },
+            //   itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+            //     PopupMenuItem<SampleItem>(
+            //       enabled: false,
+            //       value: SampleItem.itemOne,
+            //       child: Column(
+            //         children: [
+            //           Row(
+            //             children: [
+            //               Text('Notification',style: TextStyle(color: notifire.textcolore),),
+            //               const Spacer(),
+            //               Container(
+            //                 height: 30,
+            //                 width: 80,
+            //                 decoration: BoxDecoration(
+            //                     color: Colors.red,
+            //                     borderRadius: BorderRadius.circular(25)
+            //                 ),
+            //                 child: ElevatedButton(
+            //                   onPressed: () {},
+            //                   style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff5D87FF),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),),
+            //                   child:  const Text('5 new',style: TextStyle(color: Colors.white)),
+            //                 ),
+            //               ),
+            //             ],
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //     PopupMenuItem<SampleItem>(
+            //       enabled: false,
+            //       value: SampleItem.itemOne,
+            //       child: Column(
+            //         children: [
+            //           ListTile(
+            //             contentPadding: const EdgeInsets.all(0),
+            //             leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-3 1.png')),
+            //             title: Text('Roman joined the Team!',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //             subtitle: Text("Congratulate him",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //     PopupMenuItem<SampleItem>(
+            //       enabled: false,
+            //       value: SampleItem.itemOne,
+            //       child: Column(
+            //         children: [
+            //           ListTile(
+            //             contentPadding: const EdgeInsets.all(0),
+            //             leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-1 1.png')),
+            //             title: Text('New message recevied',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //             subtitle: Text("Salma sent you new message",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //     PopupMenuItem<SampleItem>(
+            //       enabled: false,
+            //       value: SampleItem.itemOne,
+            //       child: Column(
+            //         children: [
+            //           ListTile(
+            //             contentPadding: const EdgeInsets.all(0),
+            //             leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-8 1.png')),
+            //             title: Text('New payment recevied',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //             subtitle: Text("Check your earning",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //     PopupMenuItem<SampleItem>(
+            //       enabled: false,
+            //       value: SampleItem.itemOne,
+            //       child: Column(
+            //         children: [
+            //           ListTile(
+            //             contentPadding: const EdgeInsets.all(0),
+            //             leading: const CircleAvatar(backgroundImage: AssetImage('assets/artist-2 1q.png')),
+            //             title: Text('Jolly completed tasks',style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //             subtitle: Text("Assign her new tasks",style: TextStyle(color: notifire.textcolore,fontSize: 13)),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //     PopupMenuItem<SampleItem>(
+            //       padding: const EdgeInsets.all(0),
+            //       enabled: false,
+            //       value: SampleItem.itemOne,
+            //       child: Column(
+            //         children: [
+            //           Padding(
+            //             padding:  const EdgeInsets.only(left: 10,right: 10),
+            //             child: SizedBox(
+            //                 height: 40,
+            //                 width: 400,
+            //                 child: OutlinedButton(onPressed: () {},
+            //                   style: ButtonStyle(shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
+            //                     side: MaterialStateProperty.all(const BorderSide(
+            //                       color: Color(0xff5D87FF),
+            //                     )),
+            //                   ), child: const Text('See all Notification',style: TextStyle(color: Color(0xff5D87FF))),)
+            //             ),
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
 
             // const SizedBox(width: 15,),
             // PopupMenuButton<SampleItem>(

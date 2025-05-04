@@ -43,7 +43,7 @@ import 'package:web_project1/e%20commerce_screen/Detail_Product_Screen.dart';
 import 'package:web_project1/e%20commerce_screen/Order_screen.dart';
 import 'package:web_project1/e%20commerce_screen/cart_screen.dart';
 import 'package:web_project1/e%20commerce_screen/prodect_screen.dart';
-import 'package:web_project1/kanban_screen/kanban_scree_1.dart';
+import 'package:web_project1/kanban_screen/kanban_scree.dart';
 import '../Auth_Screen/forgot_screen_2.dart';
 import '../Auth_Screen/login_screen.dart';
 import '../Crm_Section/contact_screen.dart';
