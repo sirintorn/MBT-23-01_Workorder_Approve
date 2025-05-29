@@ -22,7 +22,8 @@ class WorkOrderReportScreen extends StatefulWidget {
 
 class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
   // Use the production API base URL
-  final WorkOrderService _service = WorkOrderService(baseUrl: 'http://metalbuildingthai-app.com:8080');
+  final WorkOrderService _service =
+      WorkOrderService(baseUrl: 'http://metalbuildingthai-app.com:8080');
   bool _isLoading = true;
   String? _error;
   String? _debugInfo;
@@ -41,7 +42,8 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
 
   Future<void> _loadWorkOrderData() async {
     try {
-      developer.log('Loading work order data for ID: ${widget.workOrderId}, attempt: ${_retryCount + 1}');
+      developer.log(
+          'Loading work order data for ID: ${widget.workOrderId}, attempt: ${_retryCount + 1}');
 
       setState(() {
         _isLoading = true;
@@ -51,7 +53,8 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
 
       // Try to get raw data first for debugging
       if (_retryCount > 0) {
-        final rawData = await _service.getRawData('MBTService/api/getWorkOrderSingle', widget.workOrderId);
+        final rawData = await _service.getRawData(
+            'MBTService/api/getWorkOrderSingle', widget.workOrderId);
         setState(() {
           _debugInfo = 'Raw API Response: $rawData';
         });
@@ -139,7 +142,7 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
             const SizedBox(height: 16),
             Text(
               'Error loading data',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Padding(
@@ -184,7 +187,8 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                           child: ListBody(
                             children: [
                               Text('1. Check if the work order ID is correct'),
-                              Text('2. Verify that the API server is accessible'),
+                              Text(
+                                  '2. Verify that the API server is accessible'),
                               Text('3. Check your internet connection'),
                               Text('4. Verify API endpoint URLs'),
                               Text('5. Contact support if problem persists'),
@@ -231,8 +235,6 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
     );
   }
 
-
-
   Widget _buildWorkOrder() {
     return Card(
       child: Padding(
@@ -242,19 +244,19 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
           children: [
             Text(
               'Work Order',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Work Order ID:,${ _workOrder?.woId}',
-                  style: Theme.of(context).textTheme.headline6,
+                  'Work Order ID:,${_workOrder?.woId}',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'Date:${_workOrder?.woDate}',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -263,11 +265,11 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
               children: [
                 Text(
                   'Project:,${_workOrder!.project}',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'IPO:${_workOrder?.ipo}',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -276,11 +278,11 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
               children: [
                 Text(
                   'PRQ ID:,${_workOrder?.prqId}',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'PRD Completion Deadline:${_workOrder?.prdCompletionDeadline}',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -293,15 +295,15 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                 // ),
                 Text(
                   'Labor Quantity:${_workOrder?.laborQty?.toString() ?? '0'} ',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'Setup Time:${_workOrder!.setuptime?.toString() ?? '0'} min',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'Downtime:${_workOrder?.downtime?.toString() ?? '0'} min',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 // Text(
                 //   'Status:${_workOrder?.status}',
@@ -310,7 +312,6 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
               ],
             ),
             _buildDetailRow('Status', _getStatusText(_workOrder?.status)),
-
           ],
         ),
       ),
@@ -321,15 +322,24 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
     if (status == null) return null;
 
     switch (status) {
-      case 0: return 'Draft';
-      case 1: return 'Waiting';
-      case 2: return 'Approved';
-      case 3: return 'Coil Prepared';
-      case 4: return 'in Process';
-      case 5: return 'Pause';
-      case 6: return 'Finished';
-      case 7: return 'Archived';
-      default: return 'Unknown Status ($status)';
+      case 0:
+        return 'Draft';
+      case 1:
+        return 'Waiting';
+      case 2:
+        return 'Approved';
+      case 3:
+        return 'Coil Prepared';
+      case 4:
+        return 'in Process';
+      case 5:
+        return 'Pause';
+      case 6:
+        return 'Finished';
+      case 7:
+        return 'Archived';
+      default:
+        return 'Unknown Status ($status)';
     }
   }
 
@@ -368,11 +378,11 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
               children: [
                 Text(
                   'Work Order Input',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'Materials: ${_materials.length}',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -404,7 +414,8 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          if (material.remark != null && material.remark!.isNotEmpty)
+                          if (material.remark != null &&
+                              material.remark!.isNotEmpty)
                             Padding(
                               padding: const EdgeInsets.only(top: 4.0),
                               child: Text(
@@ -421,8 +432,10 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Barcode: ${material.specoilBarcode ?? ' '}'),
-                                    Text('Code: ${material.specoilCode ?? ' '}'),
+                                    Text(
+                                        'Barcode: ${material.specoilBarcode ?? ' '}'),
+                                    Text(
+                                        'Code: ${material.specoilCode ?? ' '}'),
                                     Text('Lot: ${material.lot ?? ' '}'),
                                   ],
                                 ),
@@ -432,8 +445,10 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Coil No: ${material.coilNo ?? ' '}'),
-                                    Text('Weight: ${material.coilWeightStart?.toStringAsFixed(2) ?? '0'} kg'),
-                                    Text('Actual: ${material.coilWeightActual?.toStringAsFixed(2) ?? '0'} kg'),
+                                    Text(
+                                        'Weight: ${material.coilWeightStart?.toStringAsFixed(2) ?? '0'} kg'),
+                                    Text(
+                                        'Actual: ${material.coilWeightActual?.toStringAsFixed(2) ?? '0'} kg'),
                                   ],
                                 ),
                               ),
@@ -463,11 +478,11 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
               children: [
                 Text(
                   'Work Order Output',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
                   'Finished Goods: ${_finishedGoods.length}',
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -518,7 +533,8 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                                   children: [
                                     Text('Barcode: ${fg.fgBarcode ?? ' '}'),
                                     Text('Spec: ${fg.fgSpec ?? ' '}'),
-                                    Text('Length: ${fg.fgLenght?.toStringAsFixed(2) ?? '0'} m'),
+                                    Text(
+                                        'Length: ${fg.fgLenght?.toStringAsFixed(2) ?? '0'} m'),
                                   ],
                                 ),
                               ),
@@ -526,9 +542,12 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('Quantity: ${fg.fgQty?.toString() ?? '0'} pcs'),
-                                    Text('Weight: ${fg.fgWeightEstimate?.toStringAsFixed(2) ?? '0'} kg'),
-                                    Text('Area: ${fg.fgArea?.toStringAsFixed(2) ?? '0'} m²'),
+                                    Text(
+                                        'Quantity: ${fg.fgQty?.toString() ?? '0'} pcs'),
+                                    Text(
+                                        'Weight: ${fg.fgWeightEstimate?.toStringAsFixed(2) ?? '0'} kg'),
+                                    Text(
+                                        'Area: ${fg.fgArea?.toStringAsFixed(2) ?? '0'} m²'),
                                   ],
                                 ),
                               ),
@@ -559,20 +578,14 @@ class _WorkOrderReportScreenState extends State<WorkOrderReportScreen> {
 
   Widget _buildTotalRow() {
     // Calculate totals
-    final totalQty = _finishedGoods.fold<int>(
-        0,
-            (sum, fg) => sum + (fg.fgQty ?? 0)
-    );
+    final totalQty =
+        _finishedGoods.fold<int>(0, (sum, fg) => sum + (fg.fgQty ?? 0));
 
     final totalWeight = _finishedGoods.fold<double>(
-        0,
-            (sum, fg) => sum + (fg.fgWeightEstimate ?? 0)
-    );
+        0, (sum, fg) => sum + (fg.fgWeightEstimate ?? 0));
 
-    final totalArea = _finishedGoods.fold<double>(
-        0,
-            (sum, fg) => sum + (fg.fgArea ?? 0)
-    );
+    final totalArea =
+        _finishedGoods.fold<double>(0, (sum, fg) => sum + (fg.fgArea ?? 0));
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),

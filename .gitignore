@@ -26,8 +26,6 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 
-
-
 #app flowy ignore
 # Miscellaneous
 lib/appflowy-board/*.class
@@ -161,3 +159,6 @@ lib/appflowy-board/!**/ios/**/default.pbxuser
 lib/appflowy-board/!**/ios/**/default.perspectivev3
 lib/appflowy-board/!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 lib/appflowy-board/!/dev/ci/**/Gemfile.lock
+
+# FVM Version Cache
+.fvm/
