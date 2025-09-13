@@ -2,7 +2,7 @@
     package="com.example.web_project1">
 
    <application
-        android:label="firework"
+        android:label="MBT Workorder Approve"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"

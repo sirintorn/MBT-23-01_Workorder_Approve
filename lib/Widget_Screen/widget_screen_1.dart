@@ -39,8 +39,16 @@ class _Widget_Screen_1State extends State<Widget_Screen_1> {
   }
 
   void commitNewMachine() async {
+    var modifiedBy = 0;
+    if (user != null && user['id'] != null) {
+      if (user['id'] is String) {
+        modifiedBy = int.tryParse(user['id'].toString()) ?? 0;
+      } else if (user['id'] is int) {
+        modifiedBy = user['id'];
+      }
+    }
     var item = await APIService.addMachine(
-        nameController.text, ipAddressController.text, user['id']);
+        nameController.text, ipAddressController.text, modifiedBy);
     setState(() {
       machines.add(item);
       // 👈 add list item to the list

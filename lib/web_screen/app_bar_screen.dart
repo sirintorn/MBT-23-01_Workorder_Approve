@@ -75,9 +75,32 @@ class _appberState extends State<appber> {
   void loadData() async{
     var loginProvider = UserLoginProvider();
     user = await loginProvider.getUser();
-    setState(() {
-      
-    });
+    debugPrint('User data loaded: $user');
+    debugPrint('User type: ${user.runtimeType}');
+    if (user != null) {
+      debugPrint('User keys: ${user.keys}');
+    }
+    if (mounted) {
+      setState(() {
+
+      });
+    }
+  }
+
+  String _getUserDisplayName() {
+    if (user == null) return 'No User';
+
+    if (user['username'] != null) {
+      return user['username'].toString();
+    } else if (user['name'] != null) {
+      return user['name'].toString();
+    } else if (user['email'] != null) {
+      return user['email'].toString();
+    } else if (user['id'] != null) {
+      return 'User ${user['id'].toString()}';
+    } else {
+      return 'Unknown User';
+    }
   }
 
   void logOut()async {
@@ -950,7 +973,7 @@ class _appberState extends State<appber> {
                 children: [
                   const CircleAvatar(backgroundImage: AssetImage('assets/32.png'),radius: 12),
                   const SizedBox(width: 10,),
-                  Text('${user['username']}',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: notifire.textcolore),),
+                  Text('${_getUserDisplayName()}',style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,color: notifire.textcolore),),
                   Icon(Icons.arrow_drop_down,size: 15,color: notifire.textcolore,),
                   const SizedBox(width: 10,),
                 ],
@@ -966,7 +989,7 @@ class _appberState extends State<appber> {
                     value: SampleItem.itemTwo,
                     child: ListTile(
                       leading: const CircleAvatar(backgroundImage: AssetImage('assets/32.png'),radius: 25),
-                      title: Text('${user['username']}',style: TextStyle(fontSize: 15,color: notifire.textcolore,fontWeight: FontWeight.bold)),
+                      title: Text('${_getUserDisplayName()}',style: TextStyle(fontSize: 15,color: notifire.textcolore,fontWeight: FontWeight.bold)),
                       subtitle: const Text('Administrator',style: TextStyle(fontSize: 10,color: Colors.grey)),
                     )
                 ),

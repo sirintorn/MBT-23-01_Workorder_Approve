@@ -6,12 +6,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:web_project1/Auth_Screen/sign_up_screen.dart';
-import 'package:web_project1/Project_screen/project1_screen.dart';
 import 'package:web_project1/Provider/colore_provider.dart';
 import 'package:web_project1/Provider/userlogin.dart';
 import 'package:web_project1/ServerAndConfig/config.dart';
 import 'package:web_project1/splase_screen.dart';
+import 'package:web_project1/common_button/get_code.dart';
 
 import '../Provider/colore_provider.dart';
 
@@ -28,6 +27,25 @@ class _LoginPageState extends State<LoginPage> {
   final UserLoginProvider loginProvider = UserLoginProvider();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  InboxController inboxController = Get.put(InboxController());
+  bool isLoading = false;
+  bool showUsernameClear = false;
+  bool showPasswordClear = false;
+
+  @override
+  void initState() {
+    super.initState();
+    usernameController.addListener(() {
+      setState(() {
+        showUsernameClear = usernameController.text.isNotEmpty;
+      });
+    });
+    passwordController.addListener(() {
+      setState(() {
+        showPasswordClear = passwordController.text.isNotEmpty;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +109,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void tryLogin() async {
+    if (usernameController.text.trim().isEmpty) {
+      _showLoginError('Please enter username');
+      return;
+    }
+
+    if (passwordController.text.trim().isEmpty) {
+      _showLoginError('Please enter password');
+      return;
+    }
+
+    if (isLoading) return; // Prevent multiple login attempts
+
+    setState(() {
+      isLoading = true;
+    });
+
     try {
          var dio = Dio();
     var response = await dio.request(
@@ -100,19 +134,43 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
+    setState(() {
+      isLoading = false;
+    });
+
     if (response.statusCode == 200) {
       print(response.data);
-      loginProvider.setUser(response.data);
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Splase_Screen()),
-          (Route<dynamic> route) => false);
+      if (response.data != null && response.data is Map && response.data.isNotEmpty) {
+        loginProvider.setUser(response.data);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => Splase_Screen()),
+            (Route<dynamic> route) => false);
+      } else {
+        _showLoginError('Invalid username or password');
+      }
+    } else if (response.statusCode == 404 || response.statusCode == 401 || response.statusCode == 403) {
+      _showLoginError('Invalid username or password');
     } else {
-      print(response.statusMessage);
-    } 
+      _showLoginError('Login failed. Please try again.');
+    }
     } catch (e) {
       print(e);
+      setState(() {
+        isLoading = false;
+      });
+      _showLoginError('Network error. Please check your connection.');
     }
+  }
+
+  void _showLoginError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+      ),
+    );
   }
 
   var result;
@@ -220,14 +278,19 @@ class _LoginPageState extends State<LoginPage> {
                                         hintText: 'Username',
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Image(
-                                              image: const AssetImage(
-                                                  'assets/user.png'),
-                                              color: notifire.textcolore),
-                                        ),
+                                        suffixIcon: showUsernameClear
+                                            ? IconButton(
+                                                icon: Icon(Icons.clear, color: Colors.grey),
+                                                onPressed: () {
+                                                  usernameController.clear();
+                                                },
+                                              )
+                                            : Padding(
+                                                padding: const EdgeInsets.only(right: 10),
+                                                child: Image(
+                                                    image: const AssetImage('assets/user.png'),
+                                                    color: notifire.textcolore),
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -255,14 +318,19 @@ class _LoginPageState extends State<LoginPage> {
                                         hintText: 'Password',
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Image(
-                                              image: const AssetImage(
-                                                  'assets/eye.png'),
-                                              color: notifire.textcolore),
-                                        ),
+                                        suffixIcon: showPasswordClear
+                                            ? IconButton(
+                                                icon: Icon(Icons.clear, color: Colors.grey),
+                                                onPressed: () {
+                                                  passwordController.clear();
+                                                },
+                                              )
+                                            : Padding(
+                                                padding: const EdgeInsets.only(right: 10),
+                                                child: Image(
+                                                    image: const AssetImage('assets/eye.png'),
+                                                    color: notifire.textcolore),
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -459,14 +527,19 @@ class _LoginPageState extends State<LoginPage> {
                                         hintText: 'Username',
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Image(
-                                              image: const AssetImage(
-                                                  'assets/user.png'),
-                                              color: notifire.textcolore),
-                                        ),
+                                        suffixIcon: showUsernameClear
+                                            ? IconButton(
+                                                icon: Icon(Icons.clear, color: Colors.grey),
+                                                onPressed: () {
+                                                  usernameController.clear();
+                                                },
+                                              )
+                                            : Padding(
+                                                padding: const EdgeInsets.only(right: 10),
+                                                child: Image(
+                                                    image: const AssetImage('assets/user.png'),
+                                                    color: notifire.textcolore),
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -494,14 +567,19 @@ class _LoginPageState extends State<LoginPage> {
                                         hintText: 'Password',
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
-                                        suffixIcon: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Image(
-                                              image: const AssetImage(
-                                                  'assets/eye.png'),
-                                              color: notifire.textcolore),
-                                        ),
+                                        suffixIcon: showPasswordClear
+                                            ? IconButton(
+                                                icon: Icon(Icons.clear, color: Colors.grey),
+                                                onPressed: () {
+                                                  passwordController.clear();
+                                                },
+                                              )
+                                            : Padding(
+                                                padding: const EdgeInsets.only(right: 10),
+                                                child: Image(
+                                                    image: const AssetImage('assets/eye.png'),
+                                                    color: notifire.textcolore),
+                                              ),
                                       ),
                                     ),
                                     const SizedBox(
@@ -523,27 +601,26 @@ class _LoginPageState extends State<LoginPage> {
                                                 borderRadius:
                                                     BorderRadius.circular(30)),
                                           ),
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return const AlertDialog(
-                                                    content: Row(children: [
-                                                      CircularProgressIndicator(
-                                                          strokeAlign: BorderSide
-                                                              .strokeAlignCenter,
-                                                          strokeWidth: 4),
-                                                      SizedBox(
-                                                        width: 16,
-                                                      ),
-                                                      Text('Please wait...')
-                                                    ]),
-                                                  );
-                                                });
-
+                                          onPressed: isLoading ? null : () {
                                             tryLogin();
                                           },
-                                          child: const Text('Login'),
+                                          child: isLoading
+                                            ? Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SizedBox(
+                                                    width: 16,
+                                                    height: 16,
+                                                    child: CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 8),
+                                                  Text('Please wait...'),
+                                                ],
+                                              )
+                                            : Text('Login'),
                                         ),
                                       ),
                                     ),

@@ -1,11 +1,11 @@
 {
-  "name": "web_project1",
-  "short_name": "web_project1",
+  "name": "MBT Workorder Approve",
+  "short_name": "MBT Workorder",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0175C2",
   "theme_color": "#0175C2",
-  "description": "A new Flutter project.",
+  "description": "MBT Workorder Approve - Flutter application for managing workorder approvals.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [

@@ -80,7 +80,14 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
       var item = group2.items[toIndex];
 
       var itemId = int.tryParse(item.id);
-      var modifiedBy = user['id'];
+      var modifiedBy = 0;
+      if (user != null && user['id'] != null) {
+        if (user['id'] is String) {
+          modifiedBy = int.tryParse(user['id'].toString()) ?? 0;
+        } else if (user['id'] is int) {
+          modifiedBy = user['id'];
+        }
+      }
       var statusCode = 2;
       debugPrint('wId:$itemId stId:$modifiedBy status:$statusCode');
       try {
@@ -93,8 +100,15 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
       var item = group1.items[toIndex];
 
       var itemId = int.tryParse(item.id);
-      var modifiedBy = user['id'];
-      var statusCode = 2;
+      var modifiedBy = 0;
+      if (user != null && user['id'] != null) {
+        if (user['id'] is String) {
+          modifiedBy = int.tryParse(user['id'].toString()) ?? 0;
+        } else if (user['id'] is int) {
+          modifiedBy = user['id'];
+        }
+      }
+      var statusCode = 1;
       debugPrint('wId:$itemId stId:$modifiedBy status:$statusCode');
 
       try {
@@ -110,6 +124,8 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
   void loadKanban() async {
     try {
       user = await UserLoginProvider().getUser();
+      debugPrint('User loaded: $user');
+      debugPrint('User ID type: ${user['id'].runtimeType}');
       machines = await APIService.getAllMachines();
 
       var g1 = <AppFlowyGroupItem>[];
@@ -183,9 +199,11 @@ class _kanban_screen_1State extends State<kanban_screen_1> {
 
   void reloadEverySecond(int s) {
     Future.delayed(Duration(seconds: s), () {
-      print('reloaded at ${DateTime.now().toString()}');
-      loadKanban();
-      reloadEverySecond(s);
+      if (mounted) {
+        print('reloaded at ${DateTime.now().toString()}');
+        loadKanban();
+        reloadEverySecond(s);
+      }
     });
   }
 
@@ -383,9 +401,10 @@ class _RichTextCardState extends State<RichTextCard> {
               onPressed: () async {
                 reloading = true;
                 await APIService.deleteWorkOrder(widget.item.codeCoil);
+
                 reloading = false;
-                setState((){
-                    Navigator.pop(context, 'Confirm');
+                setState(() {
+                  Navigator.pop(context, 'Confirm');
                 });
               },
               child: const Text('Confirm'),

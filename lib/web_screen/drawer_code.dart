@@ -4,24 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:web_project1/Auth_Screen/create_account_screen.dart';
-import 'package:web_project1/Auth_Screen/forgot_screen.dart';
-import 'package:web_project1/Auth_Screen/login_screen.dart';
-import 'package:web_project1/Auth_Screen/otp_screen.dart';
-import 'package:web_project1/Auth_Screen/otp_screen_2.dart';
-import 'package:web_project1/Auth_Screen/auth_screen.dart';
 import 'package:web_project1/demo-1-screen/common_layout.dart';
-import 'package:web_project1/email-inbox-screen/inbox_screen.dart';
 
-import '../Auth_Screen/forgot_screen_2.dart';
-import '../Auth_Screen/sign_up_screen.dart';
 import '../Provider/colore_provider.dart';
 import '../common_button/get_code.dart';
 
 class mypages{
  static List page=[
     const laout(),
-    const Inbox(),
   ];
  static int pageselecter = 0;
 }
@@ -2011,99 +2001,6 @@ class _Drawer1State extends State<Drawer1> {
                       ),
 
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10,right: 10),
-                        child: Container(
-                          height: 40,
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                            // border: Border.all(color: Colors.grey.withOpacity(0.4)),
-                              color: notifire.darkmaincontain,
-                              borderRadius: BorderRadius.circular(30)
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if(notifire.getIsDark == false){
-                                        setState(() {
-                                          notifire.isavalable(true);
-                                        });
-                                      }else{
-                                        setState(() {
-                                          notifire.isavalable(false);
-                                        });
-                                      }
-                                    });
-
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: Container(
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color:  notifire.getIsDark? Colors.transparent : notifire.getsecoundcontain,
-                                          // color: notifire.undrcontaincolore,
-                                          borderRadius: BorderRadius.circular(15)
-                                      ),
-                                      child:  Row(
-                                        children: [
-                                          const Expanded(child: SizedBox(width: 10,)),
-                                          Text('Light',style: TextStyle(color: notifire.textcolore)),
-                                          const SizedBox(width: 10,),
-                                          Image(image: const AssetImage('assets/sun.png'),color: notifire.textcolore),
-                                          const Expanded(child: SizedBox(width: 10,)),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      if(notifire.getIsDark == false){
-                                        setState(() {
-                                          notifire.isavalable(true);
-                                        });
-                                      }else{
-                                        setState(() {
-                                          notifire.isavalable(false);
-                                        });
-                                      }
-                                    });
-
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: Container(
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                          color: notifire.getIsDark? notifire.getsecoundcontain : Colors.transparent,
-                                          // color: notifire.undrcontaincolore,
-                                          borderRadius: BorderRadius.circular(15)
-                                      ),
-                                      child:  Row(
-                                        children: [
-                                          const Expanded(child: SizedBox(width: 10,)),
-                                          Text('Dark',style: TextStyle(color: notifire.textcolore)),
-                                          const SizedBox(width: 10,),
-                                          Image(image: const AssetImage('assets/moon.png'),color: notifire.textcolore),
-                                          const Expanded(child: SizedBox(width: 10,)),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10,),
                     ],
                   ),
                 );

@@ -62,14 +62,18 @@ class _laoutState extends State<laout> {
       var workOrders = await APIService.getMachineWorkOrder(item['id']);
       workOrderList.add(workOrders);
     }
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void reloadEverySecond(int s) {
     Future.delayed(Duration(seconds: s), () {
-      print('reloaded at ${DateTime.now().toString()}');
-      loadData();
-      reloadEverySecond(s);
+      if (mounted) {
+        print('reloaded at ${DateTime.now().toString()}');
+        loadData();
+        reloadEverySecond(s);
+      }
     });
   }
 
