@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:web_project1/Pages/loginPage.dart';
-import 'package:web_project1/Provider/userlogin.dart';
+import 'package:mbt_workorder_approve/Pages/loginPage.dart';
+import 'package:mbt_workorder_approve/Provider/userlogin.dart';
 
 import '../Provider/colore_provider.dart';
 import '../common_button/get_code.dart';

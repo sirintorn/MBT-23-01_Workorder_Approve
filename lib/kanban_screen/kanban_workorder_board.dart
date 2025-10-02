@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:dio/dio.dart';
+import 'package:provider/provider.dart';
 import 'package:appflowy_board/appflowy_board.dart';
+import '../Provider/colore_provider.dart';
+import '../Provider/apiservice.dart';
 
 class WorkOrderApprove1 extends StatefulWidget {
   const WorkOrderApprove1({Key? key}) : super(key: key);
@@ -242,6 +245,244 @@ class RichTextCard extends StatefulWidget {
 }
 
 class _RichTextCardState extends State<RichTextCard> {
+
+  Future<void> _showWorkorderInfo(BuildContext context) async {
+    final ColorNotifire notifire = Provider.of<ColorNotifire>(context, listen: false);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      final workorderId = int.parse(widget.item.codeCoil);
+
+      final workorderDetails = await APIService.getWorkorderDetails(workorderId);
+      final workorderMaterials = await APIService.getWorkorderMaterials(workorderId);
+      final workorderFG = await APIService.getWorkorderFG(workorderId);
+
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close loading dialog
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: notifire.containcolore1,
+            title: Row(
+              children: [
+                const Icon(Icons.info, color: Colors.blue),
+                const SizedBox(width: 10),
+                Text(
+                  'Work Order Information',
+                  style: TextStyle(color: notifire.textcolore),
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildWorkorderSection(workorderDetails, notifire),
+                    const SizedBox(height: 20),
+                    _buildMaterialsSection(workorderMaterials, notifire),
+                    const SizedBox(height: 20),
+                    _buildFGSection(workorderFG, notifire),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close loading dialog
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error loading work order information: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Widget _buildWorkorderSection(dynamic workorder, ColorNotifire notifire) {
+    return Card(
+      color: notifire.containcolore1,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Work Order Details',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (workorder != null) ...[
+              _buildInfoRow('Work Order ID', workorder['woId']?.toString() ?? 'N/A', notifire),
+              _buildInfoRow('PRQ ID', workorder['prqId']?.toString() ?? 'N/A', notifire),
+              _buildInfoRow('Project', workorder['project']?.toString() ?? 'N/A', notifire),
+              _buildInfoRow('Completion Deadline', workorder['prdCompletionDeadline']?.toString() ?? 'N/A', notifire),
+              _buildInfoRow('Status', _getStatusText(workorder['status']), notifire),
+              _buildInfoRow('IPO', workorder['ipo']?.toString() ?? 'N/A', notifire),
+              _buildInfoRow('Labor Qty', workorder['laborQty']?.toString() ?? 'N/A', notifire),
+            ] else
+              Text('No work order details available', style: TextStyle(color: notifire.textcolore)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMaterialsSection(dynamic materials, ColorNotifire notifire) {
+    return Card(
+      color: notifire.containcolore1,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Materials',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (materials != null && materials is List && materials.isNotEmpty) ...[
+              ...materials.map((material) => Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoRow('Spec Coil Code', material['specoilCode']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Description', material['specoilDescription']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Coil No', material['coilNo']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Weight Start', material['coilWeightStart']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Weight Actual', material['coilWeightActual']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Weight Remaining', material['coilWeightRemaining']?.toString() ?? 'N/A', notifire),
+                    ],
+                  ),
+                ),
+              )).toList(),
+            ] else
+              Text('No materials found', style: TextStyle(color: notifire.textcolore)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFGSection(dynamic finishedGoods, ColorNotifire notifire) {
+    return Card(
+      color: notifire.containcolore1,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Finished Goods',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (finishedGoods != null && finishedGoods is List && finishedGoods.isNotEmpty) ...[
+              ...finishedGoods.map((fg) => Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoRow('FG Spec', fg['fgSpec']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Description', fg['fgDescription']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Length', fg['fgLenght']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Quantity', fg['fgQty']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Weight Estimate', fg['fgWeightEstimate']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRow('Area', fg['fgArea']?.toString() ?? 'N/A', notifire),
+                    ],
+                  ),
+                ),
+              )).toList(),
+            ] else
+              Text('No finished goods found', style: TextStyle(color: notifire.textcolore)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value, ColorNotifire notifire) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 150,
+            child: Text(
+              '$label:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(color: notifire.textcolore),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getStatusText(dynamic status) {
+    switch (status) {
+      case 1:
+        return 'Waiting';
+      case 2:
+        return 'Approved';
+      case 3:
+        return 'In Progress';
+      case 4:
+        return 'Finished';
+      default:
+        return 'Unknown ($status)';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -273,8 +514,11 @@ class _RichTextCardState extends State<RichTextCard> {
               widget.item.specCoil,
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
-            TextButton(onPressed: () {}, child: Text('View info')),
-            TextButton(onPressed: () {}, child: Text('Delete'))
+            TextButton(
+              onPressed: () => _showWorkorderInfo(context),
+              child: const Text('View info'),
+            ),
+            TextButton(onPressed: () {}, child: const Text('Delete'))
           ],
         ),
       ),
@@ -294,6 +538,244 @@ class NormalTextCard extends StatefulWidget {
 }
 
 class _NormalTextCardState extends State<NormalTextCard> {
+
+  Future<void> _showWorkorderInfoNormal(BuildContext context) async {
+    final ColorNotifire notifire = Provider.of<ColorNotifire>(context, listen: false);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    try {
+      final workorderId = int.parse(widget.item.codeCoil);
+
+      final workorderDetails = await APIService.getWorkorderDetails(workorderId);
+      final workorderMaterials = await APIService.getWorkorderMaterials(workorderId);
+      final workorderFG = await APIService.getWorkorderFG(workorderId);
+
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close loading dialog
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: notifire.containcolore1,
+            title: Row(
+              children: [
+                const Icon(Icons.info, color: Colors.blue),
+                const SizedBox(width: 10),
+                Text(
+                  'Work Order Information',
+                  style: TextStyle(color: notifire.textcolore),
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: MediaQuery.of(context).size.height * 0.7,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildWorkorderSectionNormal(workorderDetails, notifire),
+                    const SizedBox(height: 20),
+                    _buildMaterialsSectionNormal(workorderMaterials, notifire),
+                    const SizedBox(height: 20),
+                    _buildFGSectionNormal(workorderFG, notifire),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.of(context).pop(); // Close loading dialog
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error loading work order information: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Widget _buildWorkorderSectionNormal(dynamic workorder, ColorNotifire notifire) {
+    return Card(
+      color: notifire.containcolore1,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Work Order Details',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (workorder != null) ...[
+              _buildInfoRowNormal('Work Order ID', workorder['woId']?.toString() ?? 'N/A', notifire),
+              _buildInfoRowNormal('PRQ ID', workorder['prqId']?.toString() ?? 'N/A', notifire),
+              _buildInfoRowNormal('Project', workorder['project']?.toString() ?? 'N/A', notifire),
+              _buildInfoRowNormal('Completion Deadline', workorder['prdCompletionDeadline']?.toString() ?? 'N/A', notifire),
+              _buildInfoRowNormal('Status', _getStatusTextNormal(workorder['status']), notifire),
+              _buildInfoRowNormal('IPO', workorder['ipo']?.toString() ?? 'N/A', notifire),
+              _buildInfoRowNormal('Labor Qty', workorder['laborQty']?.toString() ?? 'N/A', notifire),
+            ] else
+              Text('No work order details available', style: TextStyle(color: notifire.textcolore)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMaterialsSectionNormal(dynamic materials, ColorNotifire notifire) {
+    return Card(
+      color: notifire.containcolore1,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Materials',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (materials != null && materials is List && materials.isNotEmpty) ...[
+              ...materials.map((material) => Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoRowNormal('Spec Coil Code', material['specoilCode']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Description', material['specoilDescription']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Coil No', material['coilNo']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Weight Start', material['coilWeightStart']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Weight Actual', material['coilWeightActual']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Weight Remaining', material['coilWeightRemaining']?.toString() ?? 'N/A', notifire),
+                    ],
+                  ),
+                ),
+              )).toList(),
+            ] else
+              Text('No materials found', style: TextStyle(color: notifire.textcolore)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFGSectionNormal(dynamic finishedGoods, ColorNotifire notifire) {
+    return Card(
+      color: notifire.containcolore1,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Finished Goods',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+            const SizedBox(height: 10),
+            if (finishedGoods != null && finishedGoods is List && finishedGoods.isNotEmpty) ...[
+              ...finishedGoods.map((fg) => Card(
+                margin: const EdgeInsets.only(bottom: 8),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildInfoRowNormal('FG Spec', fg['fgSpec']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Description', fg['fgDescription']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Length', fg['fgLenght']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Quantity', fg['fgQty']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Weight Estimate', fg['fgWeightEstimate']?.toString() ?? 'N/A', notifire),
+                      _buildInfoRowNormal('Area', fg['fgArea']?.toString() ?? 'N/A', notifire),
+                    ],
+                  ),
+                ),
+              )).toList(),
+            ] else
+              Text('No finished goods found', style: TextStyle(color: notifire.textcolore)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRowNormal(String label, String value, ColorNotifire notifire) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 150,
+            child: Text(
+              '$label:',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: notifire.textcolore,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: TextStyle(color: notifire.textcolore),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getStatusTextNormal(dynamic status) {
+    switch (status) {
+      case 1:
+        return 'Waiting';
+      case 2:
+        return 'Approved';
+      case 3:
+        return 'In Progress';
+      case 4:
+        return 'Finished';
+      default:
+        return 'Unknown ($status)';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -325,7 +807,10 @@ class _NormalTextCardState extends State<NormalTextCard> {
               widget.item.specCoil,
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
-            TextButton(onPressed: () {}, child: Text('View info')),
+            TextButton(
+              onPressed: () => _showWorkorderInfoNormal(context),
+              child: const Text('View info'),
+            ),
           ],
         ),
       ),

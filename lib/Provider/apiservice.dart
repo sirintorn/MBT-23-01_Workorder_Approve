@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:web_project1/ServerAndConfig/config.dart';
+import 'package:mbt_workorder_approve/ServerAndConfig/config.dart';
 
 class APIService {
   static Future<dynamic> getAllMachines() async {
@@ -98,6 +98,54 @@ class APIService {
     var dio = Dio();
     var response = await dio.request(
       '${Configuration.apiServer}getTodayWorkorderKanban',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return (response.statusMessage);
+    }
+  }
+
+  static Future<dynamic> getWorkorderDetails(int workorderId) async {
+    var dio = Dio();
+    var response = await dio.request(
+      '${Configuration.apiServer}getWorkorderDetails/$workorderId',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return (response.statusMessage);
+    }
+  }
+
+  static Future<dynamic> getWorkorderMaterials(int workorderId) async {
+    var dio = Dio();
+    var response = await dio.request(
+      '${Configuration.apiServer}getWorkorderMaterials/$workorderId',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return (response.statusMessage);
+    }
+  }
+
+  static Future<dynamic> getWorkorderFG(int workorderId) async {
+    var dio = Dio();
+    var response = await dio.request(
+      '${Configuration.apiServer}getWorkorderFG/$workorderId',
       options: Options(
         method: 'GET',
       ),

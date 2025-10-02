@@ -3,6 +3,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import '../demo-1-screen/common_layout.dart';
 import '../kanban_screen/kanban_scree_1.dart';
 import '../Widget_Screen/widget_screen_1.dart';
+import '../Pages/user_management.dart';
 
 class InboxController extends GetxController implements GetxService {
   int pageselecter = 0;
@@ -65,7 +66,7 @@ class InboxController extends GetxController implements GetxService {
     const laout(),                         //48 - placeholder
     const laout(),                         //49 - placeholder
     const laout(),                         //50 - placeholder
-    const laout(),                         //51 - placeholder
+    const UserManagement(),                //51 - User Management
     const laout(),                         //52 - placeholder
     const laout(),                         //53 - placeholder
   ];

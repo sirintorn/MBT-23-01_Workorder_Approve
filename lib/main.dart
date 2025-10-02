@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/root/internacionalization.dart';
 import 'package:provider/provider.dart';
-import 'package:web_project1/Pages/loginPage.dart';
-import 'package:web_project1/Provider/userlogin.dart';
-import 'package:web_project1/splase_screen.dart';
+import 'package:mbt_workorder_approve/Pages/loginPage.dart';
+import 'package:mbt_workorder_approve/Provider/userlogin.dart';
+import 'package:mbt_workorder_approve/splase_screen.dart';
 
 import 'Provider/colore_provider.dart';
 import 'common_button/scrool_screen.dart';

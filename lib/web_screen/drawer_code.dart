@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:web_project1/demo-1-screen/common_layout.dart';
+import 'package:mbt_workorder_approve/demo-1-screen/common_layout.dart';
 
 import '../Provider/colore_provider.dart';
+import '../Provider/userlogin.dart';
 import '../common_button/get_code.dart';
 
 class mypages{
@@ -25,6 +26,8 @@ class Drawer1 extends StatefulWidget {
 }
 
 class _Drawer1State extends State<Drawer1> {
+  final UserLoginProvider loginProvider = UserLoginProvider();
+  Map<String, dynamic>? currentUser;
 
   List Demo = [
     'Demo 1',
@@ -116,6 +119,16 @@ class _Drawer1State extends State<Drawer1> {
   @override
   void initState() {
     super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    final user = await loginProvider.getUser();
+    if (mounted) {
+      setState(() {
+        currentUser = user;
+      });
+    }
   }
 
 
@@ -150,7 +163,7 @@ class _Drawer1State extends State<Drawer1> {
                               onTap: () {
                                 inboxController.setTextIsTrue(0);
                               },
-                              child: Text('Workorder \nManagement \n' +widget.version, style: TextStyle(fontFamily: 'Jost-SemiBold', fontSize: 20,color: notifire.textcolore, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis)),
+                              child: Text('Workorder \nManagement \n${widget.version}', style: TextStyle(fontFamily: 'Jost-SemiBold', fontSize: 20,color: notifire.textcolore, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis)),
                         ],
                       ),
                       // Column(
@@ -294,31 +307,27 @@ class _Drawer1State extends State<Drawer1> {
                                   ),
                                 ),
 
-                                // const SizedBox(height: 10,),
-                                // Text('Apps',style: TextStyle(fontSize: 15,color: notifire.textcolore)),
-                                // const SizedBox(height: 10,),
-
-
-
-                                // Container(
-                                //   decoration: BoxDecoration(
-                                //       color: inboxController.pageselecter == 51? notifire.deercolore:Colors.transparent,
-                                //       borderRadius: BorderRadius.circular(15)
-                                //   ),
-                                //   child: ListTile(
-                                //     onTap: () {
-                                //       inboxController.setTextIsTrue(51);
-                                //       Get.back();
-                                //     },
-                                //     trailing: const SizedBox(),
-                                //     title: Text('User Management', style: TextStyle(
-                                //         fontWeight: FontWeight.bold,
-                                //         fontSize: 13,
-                                //         color: inboxController.pageselecter == 51 ? notifire.drwetextcode : notifire.textcolore),),
-                                //     leading:  Image(
-                                //         image: const AssetImage('assets/user.png'),height: 20,width: 20, color: inboxController.pageselecter == 2 ? notifire.drwetextcode : notifire.textcolore),
-                                //   ),
-                                // ),
+                                // Show User Management menu only for super users
+                                if (currentUser != null && (currentUser!['super'] == true || currentUser!['super'] == 1))
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: inboxController.pageselecter == 51? notifire.deercolore:Colors.transparent,
+                                        borderRadius: BorderRadius.circular(15)
+                                    ),
+                                    child: ListTile(
+                                      onTap: () {
+                                        inboxController.setTextIsTrue(51);
+                                        Get.back();
+                                      },
+                                      trailing: const SizedBox(),
+                                      title: Text('User Management', style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: inboxController.pageselecter == 51 ? notifire.drwetextcode : notifire.textcolore),),
+                                      leading:  Image(
+                                          image: const AssetImage('assets/user.png'),height: 20,width: 20, color: inboxController.pageselecter == 51 ? notifire.drwetextcode : notifire.textcolore),
+                                    ),
+                                  ),
                                 // Container(
                                 //   decoration: BoxDecoration(
                                 //       color: inboxController.pageselecter == 29? notifire.deercolore:Colors.transparent,
